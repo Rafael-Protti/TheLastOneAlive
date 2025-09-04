@@ -20,15 +20,15 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        bool ataque = Input.GetKeyUp(KeyCode.RightShift);
 
-
-        if (Input.GetButtonDown("Ataque") && podePular == true)
+        if (ataque && podePular == true)
         {
-            anima.SetTrigger("Ataque");
+            anima.SetBool("estaAtacando", true);
         }
         else
         {
-            return;
+            anima.SetBool("estaAtacando", false);
         }
     }
 
