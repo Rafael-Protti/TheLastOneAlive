@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public float velo = 10;
     public float velomax = 5;
     public float forcaPulo = 10;
+    public bool estaDireita = true; 
     bool podePular = true; 
 
     void Start()
@@ -24,6 +25,18 @@ public class Player : MonoBehaviour
     {
         //movimento do player
         float move = Input.GetAxisRaw("Horizontal");
+
+        //virar sprite
+        if (move == 1)
+        {
+            transform.eulerAngles = new Vector2(0, 0);
+            estaDireita = true;
+        }
+        if (move == -1)
+        {
+            transform.eulerAngles = new Vector2(0, 180);
+            estaDireita = false;
+        }
 
         rigib.AddForce(new Vector2(move * velo, 0));
 
