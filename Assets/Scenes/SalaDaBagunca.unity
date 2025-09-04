@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 484440724}
   m_Layer: 0
   m_Name: Square
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -508,6 +508,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velo: 100
   velomax: 5
+  forcaPulo: 20
 --- !u!212 &909916509
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -636,10 +637,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.5
-  m_LinearDamping: 3
+  m_Mass: 1
+  m_LinearDamping: 1
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
