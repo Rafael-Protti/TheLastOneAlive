@@ -8,8 +8,9 @@ public class Player : MonoBehaviour
     public float velo = 10;
     public float velomax = 5;
     public float forcaPulo = 10;
+    public float forcaDash = 100;
     public bool estaDireita = true; 
-    bool podePular = true; 
+    bool podePular = true;
 
     void Start()
     {
@@ -20,9 +21,9 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool ataque = Input.GetKeyUp(KeyCode.RightShift);
+        bool ataque = Input.GetKey(KeyCode.RightShift);
 
-        if (ataque && podePular == true)
+        if (ataque && podePular == true || podePular == false)
         {
             anima.SetBool("estaAtacando", true);
         }
