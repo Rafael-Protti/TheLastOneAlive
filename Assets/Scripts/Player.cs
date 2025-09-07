@@ -1,10 +1,14 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.Video;
 
 public class Player : MonoBehaviour
 {
     Rigidbody2D rigib;
     Animator anima;
 
+    public int vida = 5;
     public float velo = 10;
     public float velomax = 5;
     public float forcaPulo = 10;
@@ -12,8 +16,11 @@ public class Player : MonoBehaviour
     public bool estaDireita = true; 
     bool podePular = true;
 
+    TextMeshProUGUI texto_vida;
+    TextMeshProUGUI texto_baus;
     void Start()
     {
+        texto_vida = GameObject.Find("VidaTexto").transform.GetComponent<TextMeshProUGUI>();
         rigib = transform.GetComponent<Rigidbody2D>();
         anima = transform.GetComponent<Animator>();
     }
@@ -21,6 +28,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Interface();
         bool ataque = Input.GetKey(KeyCode.RightShift);
 
         if (ataque && podePular == true || podePular == false)
@@ -31,20 +39,13 @@ public class Player : MonoBehaviour
         {
             anima.SetBool("estaAtacando", false);
         }
+
+        GameOver();
     }
 
     void FixedUpdate()
     {
         MovePlayer();
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            podePular = true;
-            anima.SetBool("estaPulando", false);
-        }    
     }
 
     void MovePlayer()
@@ -86,6 +87,41 @@ public class Player : MonoBehaviour
             anima.SetBool("estaPulando", true);
             rigib.AddForce(new Vector2(0, forcaPulo), ForceMode2D.Impulse);
             podePular = false;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 6) //a layer 6 é o "Ground". Por algum motivo, só funciona com o número.
+        {
+            podePular = true;
+            anima.SetBool("estaPulando", false);
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 7 || collision.gameObject.CompareTag("Inimigo")) //trap = 7
+        {
+            PerderVida();
+        }
+    }
+
+    void PerderVida()
+    {
+        vida -= 1;
+    }
+
+    void Interface()
+    {
+        texto_vida.text = "<color=red>Vida: " + vida + "</color>"; 
+    }
+
+    void GameOver()
+    {
+        if (vida <= 0)
+        {
+            rigib.bodyType = RigidbodyType2D.Static;
         }
     }
 }
