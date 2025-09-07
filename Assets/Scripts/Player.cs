@@ -13,8 +13,12 @@ public class Player : MonoBehaviour
     public float velomax = 5;
     public float forcaPulo = 10;
     public float forcaDash = 100;
-    public bool estaDireita = true; 
+    public bool estaDireita = true;
+
+    int vidamax;
     bool podePular = true;
+    Vector2 posicao_inicial;
+    Vector2 checkpoint;
 
     TextMeshProUGUI texto_vida;
     TextMeshProUGUI texto_baus;
@@ -23,6 +27,8 @@ public class Player : MonoBehaviour
         texto_vida = GameObject.Find("VidaTexto").transform.GetComponent<TextMeshProUGUI>();
         rigib = transform.GetComponent<Rigidbody2D>();
         anima = transform.GetComponent<Animator>();
+        posicao_inicial = transform.position;
+        vidamax = vida;
     }
 
     // Update is called once per frame
@@ -105,6 +111,11 @@ public class Player : MonoBehaviour
         {
             PerderVida();
         }
+
+        if (collision.gameObject.CompareTag("Checkpoint"))
+        {
+            checkpoint = collision.gameObject.transform.position;
+        }
     }
 
     void PerderVida()
@@ -121,7 +132,8 @@ public class Player : MonoBehaviour
     {
         if (vida <= 0)
         {
-            rigib.bodyType = RigidbodyType2D.Static;
+            transform.position = checkpoint;
+            vida = vidamax;
         }
     }
 }

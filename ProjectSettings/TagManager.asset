@@ -9,6 +9,7 @@ TagManager:
   - Visao
   - Chave
   - Bau
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
