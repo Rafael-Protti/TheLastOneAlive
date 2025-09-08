@@ -10,6 +10,7 @@ TagManager:
   - Chave
   - Bau
   - Checkpoint
+  - Princesa
   layers:
   - Default
   - TransparentFX

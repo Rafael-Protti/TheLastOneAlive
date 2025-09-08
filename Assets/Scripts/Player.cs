@@ -1,6 +1,7 @@
 ﻿using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 
 public class Player : MonoBehaviour
@@ -8,27 +9,33 @@ public class Player : MonoBehaviour
     Rigidbody2D rigib;
     Animator anima;
 
-    public int vida = 5;
+    public static int pontos = 100;
+    public int vida = 100;
     public float velo = 10;
     public float velomax = 5;
     public float forcaPulo = 10;
     public float forcaDash = 100;
     public bool estaDireita = true;
 
+    int pontosmax;
     int vidamax;
     bool podePular = true;
     Vector2 posicao_inicial;
     Vector2 checkpoint;
 
     TextMeshProUGUI texto_vida;
-    TextMeshProUGUI texto_baus;
+    TextMeshProUGUI texto_pontos;
+    TextMeshProUGUI pontuacao;
     void Start()
     {
         texto_vida = GameObject.Find("VidaTexto").transform.GetComponent<TextMeshProUGUI>();
+        texto_pontos = GameObject.Find("PontosTexto").transform.GetComponent<TextMeshProUGUI>();
+        pontuacao = GameObject.Find("Evento").transform.GetComponent<TextMeshProUGUI>();
         rigib = transform.GetComponent<Rigidbody2D>();
         anima = transform.GetComponent<Animator>();
         posicao_inicial = transform.position;
         vidamax = vida;
+        pontosmax = pontos;
     }
 
     // Update is called once per frame
@@ -45,6 +52,8 @@ public class Player : MonoBehaviour
         {
             anima.SetBool("estaAtacando", false);
         }
+
+        
 
         GameOver();
     }
@@ -92,6 +101,16 @@ public class Player : MonoBehaviour
         {
             anima.SetBool("estaPulando", true);
             rigib.AddForce(new Vector2(0, forcaPulo), ForceMode2D.Impulse);
+        }
+
+        rigib.linearVelocityY = Mathf.Clamp(rigib.linearVelocityY, -forcaPulo, forcaPulo);
+    }
+
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 6) //a layer 6 é o "Ground". Por algum motivo, só funciona com o número.
+        {
             podePular = false;
         }
     }
@@ -103,9 +122,15 @@ public class Player : MonoBehaviour
             podePular = true;
             anima.SetBool("estaPulando", false);
         }
+
+        if (collision.gameObject.CompareTag("Princesa"))
+        {
+            pontuacao.text = "<color=blue>Sua pontuação final foi: " + pontos;
+            Invoke("CarregarCena", 4);
+        }
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 7 || collision.gameObject.CompareTag("Inimigo")) //trap = 7
         {
@@ -125,15 +150,28 @@ public class Player : MonoBehaviour
 
     void Interface()
     {
-        texto_vida.text = "<color=red>Vida: " + vida + "</color>"; 
+        texto_vida.text = "<color=red>Vida: " + vida + "</color>";
+        texto_pontos.text = "<color=blue>Pontos: " + pontos + "</color>";
     }
 
     void GameOver()
     {
         if (vida <= 0)
         {
+            pontos -= 10;
             transform.position = checkpoint;
             vida = vidamax;
         }
+
+        if (pontos < -50)
+        {
+            SceneManager.LoadScene("CenaSecreta");
+        }
     }
+
+    void CarregarCena()
+    {
+        SceneManager.LoadScene("FimDeJogo");
+    }
+
 }
