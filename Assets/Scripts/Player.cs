@@ -25,12 +25,12 @@ public class Player : MonoBehaviour
 
     TextMeshProUGUI texto_vida;
     TextMeshProUGUI texto_pontos;
-    TextMeshProUGUI pontuacao;
+    TextMeshProUGUI aviso;
     void Start()
     {
         texto_vida = GameObject.Find("VidaTexto").transform.GetComponent<TextMeshProUGUI>();
         texto_pontos = GameObject.Find("PontosTexto").transform.GetComponent<TextMeshProUGUI>();
-        pontuacao = GameObject.Find("Evento").transform.GetComponent<TextMeshProUGUI>();
+        aviso = GameObject.Find("Evento").transform.GetComponent<TextMeshProUGUI>();
         rigib = transform.GetComponent<Rigidbody2D>();
         anima = transform.GetComponent<Animator>();
         posicao_inicial = transform.position;
@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
             anima.SetBool("estaAtacando", false);
         }
 
-        
+
 
         GameOver();
     }
@@ -125,7 +125,7 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Princesa"))
         {
-            pontuacao.text = "<color=blue>Sua pontuação final foi: " + pontos;
+            aviso.text = "<color=blue>Sua pontuação final foi: " + pontos;
             Invoke("CarregarCena", 4);
         }
     }
@@ -140,6 +140,8 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Checkpoint"))
         {
             checkpoint = collision.gameObject.transform.position;
+            aviso.text = "<color=green>Ponto de renascimento definido!</color>";
+            Invoke("LimparAviso", 3);
         }
     }
 
@@ -172,6 +174,11 @@ public class Player : MonoBehaviour
     void CarregarCena()
     {
         SceneManager.LoadScene("FimDeJogo");
+    }
+
+    void LimparAviso()
+    {
+        aviso.text = "";
     }
 
 }

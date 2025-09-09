@@ -35,7 +35,13 @@ public class AbrirBaus : MonoBehaviour
             abrefecha.SetBool("aberto", true);
             baus++;
             Destroy(grade);
-            aviso.text = "<color=purple>Uma barreira foi quebrada!</color>";
+            aviso.text = "<color=purple>Uma grade foi aberta!</color>";
+            Invoke("LimparAviso", 3);
+        }
+
+        if (collision.gameObject.CompareTag("Player") && ColetarChaves.coletada < chavesnecessarias)
+        {
+            aviso.text = "<color=red>Você precisa de uma chave!</color>";
             Invoke("LimparAviso", 3);
         }
     }

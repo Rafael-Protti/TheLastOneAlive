@@ -25,7 +25,7 @@ public class AcionarAlavancas : MonoBehaviour
             acionando.SetBool("acionada", true);
             acionada = true;
             Destroy(portao);
-            texto.text = "<color=green>Um portão foi aberto!</color>";
+            texto.text = "<color=green>Uma grade foi aberta!</color>";
             Invoke("LimparMensagem", 3);
 
         }

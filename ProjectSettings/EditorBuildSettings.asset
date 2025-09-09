@@ -7,16 +7,16 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/Menu.unity
-    guid: d65abfa8d28fbab419c753c0d60a7493
+    guid: b29342d5bb483b94db6e3b3071a2bad2
   - enabled: 1
     path: Assets/Scenes/Creditos.unity
-    guid: ea234532a47e3d04581136743dc1651f
+    guid: 2ad25dd9a6ebce6469571280f77560b4
   - enabled: 1
     path: Assets/Scenes/Nivel1.unity
     guid: 9c8d40fa5aba0c84d9d37e734bb9f54f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SalaDaBagunca.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    guid: 896b093cacb55aa4788cac789715159c
   - enabled: 1
     path: Assets/Scenes/FimDeJogo.unity
     guid: 062a62f7e9d4b5044a7ea5b2eac26711
