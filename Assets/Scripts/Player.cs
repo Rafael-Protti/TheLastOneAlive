@@ -9,8 +9,8 @@ public class Player : MonoBehaviour
     Rigidbody2D rigib;
     Animator anima;
 
-    public static int pontos = 100;
-    public int vida = 100;
+    public static int pontos = 50;
+    public int vida = 50;
     public float velo = 10;
     public float velomax = 5;
     public float forcaPulo = 10;
